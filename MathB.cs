@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Text;
 using System.Numerics;
 
@@ -116,7 +116,6 @@ namespace BigIntegerMath {
         /// 素数判定
         /// </summary>
         public bool CheckPrime(BigInteger n) {
-            RandomBigInteger rb = new RandomBigInteger();
             if(n == 2)
                 return true;
             if(n <= 1 || CheckEven(n))
@@ -144,14 +143,13 @@ namespace BigIntegerMath {
         }
 
         /// <summary>
-        /// minからmaxまでのランダムな素数を返す
+        /// 指定された桁数の素数を返す
         /// </summary>
-        public BigInteger GetPrime(BigInteger min,BigInteger max) {
-            RandomBigInteger rb = new RandomBigInteger();
+        public BigInteger GetPrime(short digit) {
             BigInteger rand;
 
             while(true) {
-                rand = rb.NextBigInteger(min,max);
+                rand = RandomDigit(digit);
                 if(CheckEven(rand))
                     rand += 1;
                 if(CheckPrime(rand))
@@ -171,18 +169,15 @@ namespace BigIntegerMath {
         /// 指定した桁数の乱数を返す
         /// </summary>
         /// <param name="digit">桁数</param>
-        /// <returns></returns>
         public BigInteger RandomDigit(int digit) {
             Random rand = new Random();
 
             StringBuilder numbers = new StringBuilder();
 
-            // 100桁のランダムな数値を表す文字列を生成
             for(int n = 0 ; n < digit ; n++) {
                 numbers.Append(rand.Next(0,10).ToString());
             }
 
-            // BigIntegerに変換
             BigInteger val = BigInteger.Parse(numbers.ToString());
 
             return val;
